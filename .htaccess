@@ -1,0 +1,10 @@
+Options All -Indexes
+
+RewriteEngine On
+
+RewriteRule ^keluar?$ ./module/keluar/execute.php
+
+RewriteRule ^multiplefollowing?$ ./module/multiplefollowing/execute.php
+RewriteRule ^multipleuploadphoto?$ ./module/multipleuploadphoto/execute.php
+RewriteRule ^multipleunfollow?$ ./module/multipleunfollow/execute.php
+RewriteRule ^multipledeletepost?$ ./module/multipledeletepost/execute.php
