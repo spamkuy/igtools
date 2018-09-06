@@ -1,3 +1,16 @@
+<?php  
+if (file_exists('../config/mysql.php')) {
+include "../config/mysql.php";
+if ($mysql->connect_error) {
+unlink('../config/mysql.php');
+echo "Pengaturan Database Salah Silahkan Refresh Halaman ini untuk mengatur ulang";
+exit;
+}else{		
+echo "<div class='c-alert c-alert--info u-mt-medium'>Aplikasi Sudah Di Install, Jika Salah Pengaturan silahkan Hapus file config/mysql.php</div>";
+exit;
+} 
+}
+?>
 <!doctype html>
 <html lang="en-us">
 <head>
@@ -49,6 +62,18 @@
 </div>
 
 <button name="input" class="c-btn c-btn--info c-btn--fullwidth" type="submit">Install</button>
+
+<?php  
+if (isset($_POST['input'])) {
+file_put_contents('../config/mysql.php', 
+'<?php  
+@$mysql = new mysqli(\''.$_POST['host'].'\',\''.$_POST['username'].'\',\''.$_POST['password'].'\',\''.$_POST['database'].'\');
+?>'
+);
+header("location: install.php");
+}
+?>
+
 </form>
 </div>
 
@@ -57,19 +82,3 @@
 <script src="../assets/js/main.min.js"></script>
 </body>
 </html>
-
-<?php  
-if (isset($_POST['input'])) {
-file_put_contents('../config/mysql.php', 
-'<?php  
-@$mysql = new mysqli(\''.$_POST['host'].'\',\''.$_POST['username'].'\',\''.$_POST['password'].'\',\''.$_POST['database'].'\');
-
-if ($mysql->connect_error) {
-    die("Connection failed: " . $mysql->connect_error);
-    exit;
-} 
-?>'
-);
-header("location: install.php");
-}
-?>
